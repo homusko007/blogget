@@ -14,7 +14,7 @@
     border-radius: 20px;
 }
 
-.delete {
+/*.delete {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -47,7 +47,7 @@
 .delete svg {
     width: 100%;
     height: 100%;
-}
+}*/
 
 .img {
     grid-area: img;
@@ -154,14 +154,14 @@
             'img rating data';
     }
 
-    .delete {
+    /*.delete {
         top: 15px;
         right: 15px;
         width: 25px;
         height: 25px;
     }
 
-   /* .linkPost {
+    .linkPost {
         font-size: 26px;
     }
 
