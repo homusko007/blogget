@@ -10,10 +10,10 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     display: -webkit-box;
-    font-weight: 700;
+    /*font-weight: 700;
     font-size: 18px;
     line-height: 130%;
-    color: #2d2d2d;
+    color: #2d2d2d;*/
     margin-bottom: 10px;
     transition: color 0.36s ease-in-out;
 }
@@ -28,9 +28,11 @@
 
 .linkAuthor {
     position: relative;
-    font-size: 12px;
+    overflow: hidden;
+    width: min-content;
+    /*font-size: 12px;
     line-height: 14px;
-    color: #cc6633;
+    color: #cc6633;*/
     transition: color 0.36s ease-in-out;
 }
 
@@ -39,9 +41,9 @@
 }
 
 @media (min-width: 580px) {
-    .linkPost {
+   /* .linkPost {
         font-size: 26px;
-    }
+    }*/
 
     .linkPost:hover {
         color: #cc6633;
@@ -51,13 +53,13 @@
         box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .linkAuthor {
+  /*  .linkAuthor {
         font-size: 14px;
-    }
+    }*/
 }
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
     .linkPost {
         font-size: 32px;
     }
-}
+}*/

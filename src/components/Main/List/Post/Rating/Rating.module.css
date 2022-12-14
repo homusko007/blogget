@@ -33,18 +33,7 @@
     background-image: url('../img/down.svg');
 }
 
-.ups {
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 130%;
-    color: #8f8f8f;
-}
-
 @media (min-width: 580px) {
-    .ups {
-        font-size: 16px;
-    }
-
     .up,
     .down {
         width: 24px;
