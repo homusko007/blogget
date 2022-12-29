@@ -3,14 +3,15 @@ import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
 import {tokenContext} from '../context/tokenContext';
 
-export const useAuth = () => {
-  const [auth, setAuth] = useState({});
-  const {token, delToken} = useContext(tokenContext);
+export const usePostData = () => {
+  const [postsData, setPostsData] = useState({});
+  const {token} = useContext(tokenContext);
 
   useEffect(() => {
     if (!token) return;
+    const arr = [];
 
-    fetch(`${URL_API}/api/v1/me`, {
+    fetch(`${URL_API}/best?limit=10`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
@@ -21,20 +22,17 @@ export const useAuth = () => {
         }
         return response.json();
       })
-      .then(({name, icon_img: iconImg}) => { // ругается что не в camel case
-        const img = iconImg.replace(/\?.*$/, ''); // обрезаем ненужное у img
-        setAuth({name, img});
+      .then(({data}) => data.children)
+      .then(data => {
+        data.forEach(item => {
+          arr.push(item.data);
+        });
+        setPostsData(arr);
       })
       .catch(err => {
         console.error(err);
-        setAuth({});
-        delToken();
       });
   }, [token]);
 
-  const clearAuth = () => {
-    setAuth({});
-  };
-
-  return [auth, clearAuth];
+  return [postsData];
 };

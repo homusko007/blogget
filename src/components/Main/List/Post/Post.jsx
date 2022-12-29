@@ -1,25 +1,27 @@
 import style from './Post.module.css';
-import notphoto from './img/notphoto.jpg';
 import PropTypes from 'prop-types';
-import formatDate from '../../../../utils/formatDate';
+import ImgPost from './ImgPost';
 import Content from './Content';
 import Rating from './Rating';
-import BtnDel from './BtnDel';
+import Date from './Date';
+import {ReactComponent as DelIcon} from './img/delete.svg';
 
 export const Post = ({postData}) => {
-  const {title, author, ups, date} = postData;
+  const {thumbnail, title, author, ups, created: date} = postData;
 
   return (
     <li className={style.post}>
-      <img className={style.img} src={notphoto} alt={title} />
+      <ImgPost thumbnail={thumbnail} title={title}/>
       <Content title={title} author={author}/>
       <Rating ups={ups} />
-      <BtnDel />
-      <time className={style.date} dateTime={date}>{formatDate(date)}</time>
+      <Date date={date} />
+      <button className={style.delete}>
+        <DelIcon />
+      </button>
     </li>
   );
 };
 
 Post.propTypes = {
-  postData: PropTypes.object,
+  postData: PropTypes.any,
 };

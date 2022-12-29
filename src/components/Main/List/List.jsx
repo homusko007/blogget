@@ -1,8 +1,10 @@
 import style from './List.module.css';
 import Post from './Post';
+import {useContext} from 'react';
+import {postDataContext} from '../../../context/postDataContext';
 
 export const List = () => {
-  const postsData = [
+  /* const postsData = [
     {
       thimbnail: '',
       title: 'Title1',
@@ -35,12 +37,15 @@ export const List = () => {
       date: '2022-03-10T08:00:00.000Z',
       id: '789',
     }
-  ];
+  ];*/
+  const {postsData} = useContext(postDataContext);
+  console.log(postsData);
+
 
   return (
     <ul className={style.list}>
-      {postsData.map((postsData) => (
-        <Post key={postsData.id} postData={postsData} />
+      {Array.from(postsData).map((postData) => (
+        <Post key={postData.id} postData={postData} />
       ))}
     </ul>
   );

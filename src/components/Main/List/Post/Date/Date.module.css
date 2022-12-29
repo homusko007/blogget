@@ -1,0 +1,15 @@
+.date {
+    grid-area: data;
+    padding-bottom: 10px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 130%;
+    color: #8f8f8f;
+}
+
+@media (min-width: 580px) {
+    .date {
+        font-size: 16px;
+        padding-right: 10px;
+    }
+}

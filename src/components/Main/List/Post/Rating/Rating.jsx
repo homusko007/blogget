@@ -1,6 +1,6 @@
 import style from './Rating.module.css';
-import PropTypes from 'prop-types';
 import {Text} from '../../../../../UI/Text';
+import PropTypes from 'prop-types';
 
 export const Rating = ({ups}) => (
   <div className={style.rating}>
@@ -16,5 +16,5 @@ export const Rating = ({ups}) => (
 );
 
 Rating.propTypes = {
-  ups: PropTypes.any,
+  ups: PropTypes.number,
 };
