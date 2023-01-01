@@ -39,8 +39,6 @@ export const List = () => {
     }
   ];*/
   const {postsData} = useContext(postDataContext);
-  console.log(postsData);
-
 
   return (
     <ul className={style.list}>

@@ -3,15 +3,15 @@ import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
 import {tokenContext} from '../context/tokenContext';
 
-export const usePostData = () => {
-  const [postsData, setPostsData] = useState({});
+export const useCommentsData = (id) => {
+  const [commentsData, setCommentsData] = useState([]);
   const {token} = useContext(tokenContext);
 
   useEffect(() => {
     if (!token) return;
     const arr = [];
 
-    fetch(`${URL_API}/best?limit=20`, {
+    fetch(`${URL_API}/comments?${id}`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
@@ -27,12 +27,14 @@ export const usePostData = () => {
         data.forEach(item => {
           arr.push(item.data);
         });
-        setPostsData(arr);
+        setCommentsData(arr);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   }, [token]);
 
-  return [postsData];
+  return [commentsData];
 };
+
+// setCommentsData(data)
