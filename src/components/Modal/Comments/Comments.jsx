@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import {Text} from '../../../UI/Text';
 import Date from '../../Main/List/Post/Date';
 
-export const Comments = ({comments}) => {
-  // const {body, author, id, created: date} = comments;
+export const Comments = ({comments}) => (
 
-  console.log(comments);
-  return (
-    <ul className={style.list}>
-      {comments.length !== 0 ? (
+  <ul className={style.list}>
+    {comments.length !== 0 ? (
       Array.from(comments).map((el) => (
         <li className={style.item} key={el.id}>
           <Text As='h3'
@@ -28,9 +25,9 @@ export const Comments = ({comments}) => {
     ) : (
       'Нет комментариев'
     )}
-    </ul>
-  );
-};
+  </ul>
+)
+;
 
 Comments.propTypes = {
   comments: PropTypes.any,
