@@ -1,39 +1,57 @@
-import {useSelector} from 'react-redux';
-import {useEffect, useState} from 'react';
-import {URL_API} from '../api/const';
+import {useSelector, useDispatch} from 'react-redux';
+import {useEffect} from 'react';
+import {commentsDataRequestAsync} from '../store/comment/commentsDataAction';
+// import {URL_API} from '../api/const';
+// import axios from 'axios';
 
-export const useCommentsData = (id) => {
+/* export const useCommentsData = (id) => {
   const [commentsData, setCommentsData] = useState([]);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
+
 
   useEffect(() => {
     if (!token) return;
-    const arr = [];
 
-    fetch(`${URL_API}/comments?${id}`, {
+
+    axios(`${URL_API}/comments/${id}`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
     })
-      .then((response) => {
-        if (response.status === 401) {
-          throw new Error(response.status);
-        }
-        return response.json();
-      })
-      .then(({data}) => data.children)
-      .then(data => {
-        data.forEach(item => {
-          arr.push(item.data);
-        });
-        setCommentsData(arr);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      .then(
+        ({
+          data: [
+            {
+              data: {
+                children: [{data: post}],
+              },
+            },
+            {
+              data: {children},
+            },
+          ],
+        }) => {
+          const comments = children.map((item) => item.data);
+          console.log({post, comments});
+          setCommentsData({post, comments});
+        })
+      .catch((err) =>
+        console.error(err));
   }, [token]);
 
-  return [commentsData];
-};
+  return [commentsData], status;
+};*/
 
-// setCommentsData(data)
+
+export const useCommentsData = (id) => {
+  const commentsData = useSelector(state => state.commentsDataReducer.comments);
+  const status = useSelector(state => state.commentsDataReducer.status);
+  const token = useSelector(state => state.tokenReducer.token);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(commentsDataRequestAsync(id));
+  }, [token]);
+
+  return [commentsData, status];
+};

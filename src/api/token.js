@@ -10,7 +10,8 @@ export const getToken = () => {
     setToken(token);
   }
   if (localStorage.getItem('bearer')) {
-    setToken(localStorage.getItem('bearer'));
+    token = localStorage.getItem('bearer');
+    setToken(token);
   }
 
   return token;

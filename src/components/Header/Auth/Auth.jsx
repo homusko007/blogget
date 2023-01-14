@@ -1,15 +1,16 @@
-import {useState, useContext} from 'react';
+import {useState} from 'react';
 import style from './Auth.module.css';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {Text} from '../../../UI/Text';
 import {urlAuth} from '../../../api/auth';
-import {authContext} from '../../../context/authContext';
 import {useDispatch} from 'react-redux';
-import {deleteToken} from '../../../store';
+import {deleteToken} from '../../../store/token/tokenReducer';
+import {useAuth} from '../../../hooks/useAuth';
+import Authloader from './Authloader';
 
 export const Auth = () => {
   const [logout, setLogout] = useState(false);
-  const {auth, clearAuth} = useContext(authContext);
+  const [auth, loading, clearAuth] = useAuth();
   const dispatch = useDispatch();
 
   const getLogout = () => {
@@ -19,7 +20,10 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {auth.name ? ( // пустой {} тоже выводит true
+      {loading ? (
+        <Authloader />
+        ) :
+          auth.name ? ( // пустой {} тоже выводит true
       <>
         <button className={style.btn} onClick={() => setLogout(!logout)}>
           <img className={style.img} src={auth.img}
