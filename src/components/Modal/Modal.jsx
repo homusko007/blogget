@@ -4,27 +4,25 @@ import Preloader from '../../UI/Preloader';
 import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import Comments from './Comments';
 import FormComment from './FormComment';
 import {useCommentsData} from '../../hooks/useCommentsData';
+import {useNavigate, useParams} from 'react-router-dom';
 
 
-export const Modal = ({id, closeModal}) => {
+export const Modal = () => {
+  const {id, page} = useParams();
+  const navigate = useNavigate();
   const overlayRef = useRef(null);
   const [isTextareaOpen, setIsTextareaOpen] = useState(false);
   const [commentsData, status] = useCommentsData(id);
   const {post, comments} = commentsData;
 
-  console.log('post', post);
-  console.log(typeof comments);
-  console.log(status);
-
-
   const handleClick = e => {
     const target = e.target;
     if (target === overlayRef.current) {
-      closeModal();
+      navigate(`/category/${page}`);
     }
   };
 
@@ -38,7 +36,7 @@ export const Modal = ({id, closeModal}) => {
   useEffect(() => {
     const keyPress = (e) => {
       if (e.keyCode === 27) { // клавиша escape
-        closeModal();
+        navigate(`/category/${page}`);
       }
     };
     window.addEventListener('keydown', keyPress);
@@ -75,9 +73,12 @@ export const Modal = ({id, closeModal}) => {
           Добавить комментарий
             </button>
             {isTextareaOpen &&
-        <FormComment />}
+            <FormComment />}
             <Comments comments={comments} />
-            <button className={style.close} onClick={closeModal}>
+            <button className={style.close}
+              onClick={() => {
+                navigate(`/category/${page}`);
+              }}>
               <CloseIcon />
             </button>
           </>

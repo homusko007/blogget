@@ -9,18 +9,20 @@ import {ReactComponent as HotIcon} from './img/hot.svg';
 import {ReactComponent as TopIcon} from './img/top.svg';
 import {debounceRaf} from '../../../utils/debounce';
 import {Text} from '../../../UI/Text';
+import {useNavigate} from 'react-router-dom';
 
 const LIST = [
-  {value: 'Главная', Icon: HomeIcon},
-  {value: 'Топ', Icon: TopIcon},
-  {value: 'Лучшие', Icon: BestIcon},
-  {value: 'Горячие', Icon: HotIcon},
+  {value: 'Главная', Icon: HomeIcon, link: 'rising'},
+  {value: 'Топ', Icon: TopIcon, link: 'top'},
+  {value: 'Лучшие', Icon: BestIcon, link: 'best'},
+  {value: 'Горячие', Icon: HotIcon, link: 'hot'},
 ].map(assighId); // перебирает каждый элем и вызывает ф-цию по генерации ID
 
 export const Tabs = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdown, setIsDropdown] = useState(true);
-  const [btnText, setBtnText] = useState('Главная');
+  const [itemMenu, setItemMenu] = useState('Главная');
+  const navigate = useNavigate();
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -39,17 +41,13 @@ export const Tabs = () => {
     };
   }, []);
 
-  const changeBtnText = e => {
-    setBtnText(e.target.textContent);
-  };
-
   return (
     <div className={style.container}>
       {isDropdown && (
         <div className={style.wrapperBtn}>
           <button className={style.btn}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-            {btnText}
+            {itemMenu}
             <ArrowIcon width={15} height={15} />
           </button>
         </div>
@@ -57,9 +55,12 @@ export const Tabs = () => {
 
       {(isDropdownOpen || !isDropdown) &&
         <ul className={style.list} onClick={() => setIsDropdownOpen(false)}>
-          {LIST.map(({value, id, Icon}) => (
+          {LIST.map(({value, link, id, Icon}) => (
             <Text As='li' className={style.item} key={id}>
-              <button className={style.btn} onClick={changeBtnText}>
+              <button className={style.btn} onClick={() => {
+                setItemMenu(value);
+                navigate(`/category/${link}`);
+              } }>
                 {value}
                 {/* проверяем есть ли иконка*/}
                 {Icon && <Icon width={30} height={30} />}

@@ -6,8 +6,8 @@ import Date from '../../Main/List/Post/Date';
 export const Comments = ({comments}) => (
 
   <ul className={style.list}>
-    {comments.length !== 0 ? (
-      Array.from(comments).map((el) => (
+    {comments.length ? (
+      Array.from(comments).map((el) => el.body && (
         <li className={style.item} key={el.id}>
           <Text As='h3'
             className={style.author}
@@ -23,7 +23,7 @@ export const Comments = ({comments}) => (
         </li>
       ))
     ) : (
-      <p>Нет комментариев/</p>
+      <p>Нет комментариев</p>
     )}
   </ul>
 )

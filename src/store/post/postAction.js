@@ -3,7 +3,9 @@ import axios from 'axios';
 
 export const POST_REQUEST = 'POST_REQUEST';
 export const POST_REQUEST_SUCCESS = 'POST_REQUEST_SUCCESS';
+export const POST_REQUEST_SUCCESS_AFTER = 'POST_REQUEST_SUCCESS_AFTER';
 export const POST_REQUEST_ERROR = 'POST_REQUEST_ERROR';
+export const CHANGE_PAGE = 'CHANGE_PAGE';
 
 export const postRequest = () => ({
   type: POST_REQUEST,
@@ -11,7 +13,14 @@ export const postRequest = () => ({
 
 export const postRequestSuccess = (data) => ({
   type: POST_REQUEST_SUCCESS,
-  data,
+  posts: data.children,
+  after: data.after,
+});
+
+export const postRequestSuccessAfter = (data) => ({
+  type: POST_REQUEST_SUCCESS_AFTER,
+  posts: data.children,
+  after: data.after,
 });
 
 export const postRequestError = (error) => ({
@@ -19,30 +28,40 @@ export const postRequestError = (error) => ({
   error,
 });
 
-export const postRequestAsync = () => (dispatch, getState) => {
+export const changePage = (page) => ({
+  type: CHANGE_PAGE,
+  page,
+});
+
+export const postRequestAsync = (newPage) => (dispatch, getState) => {
+  let page = getState().postReducer.page;
+  if (newPage) {
+    page = newPage;
+    dispatch(changePage(page));
+  }
   const token = getState().tokenReducer.token;
-  if (!token) return;
+  const after = getState().postReducer.after;
+  const loading = getState().postReducer.loading;
+  const isLast = getState().postReducer.isLast; // after последний
+
+  if (!token || loading || isLast) return;
+  // при загрузке или если after был последним никаких запросов не производить
 
   dispatch(postRequest());
 
-  axios(`${URL_API}/best?limit=20`, {
+  axios(`${URL_API}/${page}?limit=10&${after ? `after=${after}` : ''}`, {
     headers: {
       Authorization: `bearer ${token}`,
     },
   })
-    .then(
-      ({
-        data: {
-          data: {
-            children
-          },
-        }
-      }) => {
-        const data = children.map((item) => item.data);
-        dispatch(postRequestSuccess(data));
-      })
+    .then(({data}) => {
+      if (after) {
+        dispatch(postRequestSuccessAfter(data.data));
+      } else {
+        dispatch(postRequestSuccess(data.data));
+      }
+    })
     .catch((err) => {
-      console.error(err);
-      dispatch(postRequestError(err.message));
+      dispatch(postRequestError(err));
     });
 };
