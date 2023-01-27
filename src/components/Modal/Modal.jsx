@@ -1,7 +1,6 @@
 import style from './Modal.module.css';
 import {ReactComponent as CloseIcon} from './img/close.svg';
 import Preloader from '../../UI/Preloader';
-import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
 import {useRef, useState, useEffect} from 'react';
@@ -16,8 +15,8 @@ export const Modal = () => {
   const navigate = useNavigate();
   const overlayRef = useRef(null);
   const [isTextareaOpen, setIsTextareaOpen] = useState(false);
-  const [commentsData, status] = useCommentsData(id);
-  const {post, comments} = commentsData;
+  const commentsData = useCommentsData(id);
+  const {0: post, 1: comments, 2: status} = commentsData;
 
   const handleClick = e => {
     const target = e.target;
@@ -74,7 +73,7 @@ export const Modal = () => {
             </button>
             {isTextareaOpen &&
             <FormComment />}
-            <Comments comments={comments} />
+            <Comments comments={comments}/>
             <button className={style.close}
               onClick={() => {
                 navigate(`/category/${page}`);
@@ -87,13 +86,4 @@ export const Modal = () => {
     </div>,
     document.getElementById('modal-root'), // 2-й пар. куда рендерим
   );
-};
-
-
-Modal.propTypes = {
-  title: PropTypes.string,
-  author: PropTypes.string,
-  markdown: PropTypes.string,
-  closeModal: PropTypes.func,
-  id: PropTypes.string,
 };

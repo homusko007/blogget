@@ -10,7 +10,6 @@ export const List = () => {
   const endList = useRef(null);
   const dispatch = useDispatch();
   const {page} = useParams();
-  console.log(page);
 
   useEffect(() => {
     dispatch(postRequestAsync(page));
@@ -36,7 +35,7 @@ export const List = () => {
   return (
     <>
       <ul className={style.list}>
-        {Array.from(postsData).map(({data}) => (
+        {postsData.map(({data}) => (
           <Post key={data.id} postData={data} />
         ))}
         <li ref={endList} className={style.end}/>

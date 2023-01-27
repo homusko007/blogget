@@ -7,7 +7,7 @@ export const Comments = ({comments}) => (
 
   <ul className={style.list}>
     {comments.length ? (
-      Array.from(comments).map((el) => el.body && (
+      comments.map((el) => el.body && (
         <li className={style.item} key={el.id}>
           <Text As='h3'
             className={style.author}
