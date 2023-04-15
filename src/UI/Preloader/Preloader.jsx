@@ -1,5 +1,5 @@
 import DotLoader from 'react-spinners/DotLoader';
 
 export const Preloader = () => (
-  <DotLoader color='#cc6633' css={{display: 'block'}} size={30}/>
+  <DotLoader color='#00ccff' css={{display: 'block'}} size={30}/>
 );

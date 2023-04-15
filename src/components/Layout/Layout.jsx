@@ -11,5 +11,4 @@ Layout.propTypes = {
     PropTypes.object,
     PropTypes.array,
   ])
-  // children: PropTypes.any,
 };
