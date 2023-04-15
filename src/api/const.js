@@ -3,5 +3,5 @@ export const URL_AUTH = 'https://www.reddit.com/api/v1/authorize?'; // авто�
 export const CLIENT_ID = 'vckwqYai14J7V6_MoMVrHg';
 export const RESPONSE_TYPE = 'token';
 export const RANDOM_STRING = 'random_string';
-export const REDIRECT_URI = 'http://localhost:3000/auth';
+export const REDIRECT_URI = 'http://blogget-five.vercel.app/auth';
 export const SCOPE = 'identity submit read';
