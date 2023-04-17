@@ -20,6 +20,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 The project was created to practice skills in React. The data is obtained from the Reddit API. To view the full features of the application, you must be registered on Reddit.
 
+## Brief overview video:
+
+https://user-images.githubusercontent.com/100041021/232497187-6429fcce-8cbf-4ff5-8389-459feadf4817.mp4
+
 
 ## Getting started
 
