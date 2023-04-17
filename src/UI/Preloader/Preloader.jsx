@@ -1,5 +1,9 @@
-import DotLoader from 'react-spinners/DotLoader';
+import PulseLoader from 'react-spinners/PulseLoader';
 
 export const Preloader = () => (
-  <DotLoader color='#00ccff' css={{display: 'block'}} size={30}/>
+  <PulseLoader
+    color='#cc6633'
+    css={{display: 'block'}}
+    size={10}
+  />
 );

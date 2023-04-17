@@ -4,10 +4,11 @@ import Preloader from '../../../UI/Preloader';
 import {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {postsRequestAsync} from '../../../store/post/postsAction';
-import {useParams, Outlet} from 'react-router-dom';
+import {useParams, Outlet, useNavigate} from 'react-router-dom';
 import {postsSlice} from '../../../store/post/postsSlice';
 
 export const List = () => {
+  const token = useSelector(state => state.tokenReducer.token);
   const postsData = useSelector(state => state.postsReducer.posts);
   const endList = useRef(null);
   const loading = useSelector(state => state.postsReducer.loading);
@@ -15,6 +16,11 @@ export const List = () => {
   const isLast = useSelector(state => state.postsReducer.isLast);
   const dispatch = useDispatch();
   const {page} = useParams();
+  const navigate = useNavigate();
+
+  if (!token) {
+    navigate('/auth');
+  }
 
   useEffect(() => {
     dispatch(postsSlice.actions.changePage(page));
@@ -42,12 +48,11 @@ export const List = () => {
 
   return (
     <>
-      {num < 1 && loading && <Preloader />}
       <ul className={style.list}>
         {postsData.map(({data}) => (
           <Post key={data.id} postData={data} />
         ))}
-        {loading && <Preloader />}
+        {loading && <div className={style.more}> <Preloader /> </div>}
         {num <= 2 ?
           <li ref={endList} className={style.end}/> : !isLast ? (
             <div className={style.more}>

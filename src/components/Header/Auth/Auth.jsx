@@ -5,16 +5,19 @@ import {Text} from '../../../UI/Text';
 import {urlAuth} from '../../../api/auth';
 import {useDispatch} from 'react-redux';
 import {deleteToken} from '../../../store/token/tokenReducer';
+import {useNavigate} from 'react-router-dom';
 import {useAuth} from '../../../hooks/useAuth';
 import Authloader from './Authloader';
 
 export const Auth = () => {
   const [logout, setLogout] = useState(false);
   const [auth, loading, clearAuth] = useAuth();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const getLogout = () => {
     dispatch(deleteToken());
+    navigate(`/`);
     clearAuth();
   };
 
